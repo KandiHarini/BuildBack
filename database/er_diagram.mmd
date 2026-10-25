@@ -1,0 +1,7 @@
+erDiagram
+    USERS ||--o{ MATERIALS : lists
+    USERS ||--o{ REQUESTS : submits
+    MATERIALS ||--o{ REQUESTS : receives
+    REQUESTS ||--o| TRANSACTIONS : creates
+    TRANSACTIONS ||--o| IMPACT_RECORDS : records
+    USERS ||--o{ NOTIFICATIONS : receives

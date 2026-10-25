@@ -1,0 +1,377 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BuildBack | Reuse Construction Materials</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">Build<span>Back</span></a>
+
+  <nav>
+    <a href="#marketplace">Marketplace</a>
+    <a href="#add-material">List Material</a>
+    <a href="#requests">My Requests</a>
+    <a href="#impact">Impact</a>
+  </nav>
+
+  <div id="auth-status">
+    <button class="btn outline" id="show-auth">Login / Register</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div>
+      <p class="eyebrow">BUILD BETTER. WASTE LESS.</p>
+
+      <h1>
+        Give construction materials<br>
+        <span>a second life.</span>
+      </h1>
+
+      <p class="hero-copy">
+        A community marketplace to share, reuse and exchange
+        surplus construction materials.
+      </p>
+
+      <a class="btn" href="#marketplace">Explore materials</a>
+    </div>
+
+    <div class="hero-card">
+      <div class="hero-icon">♻</div>
+
+      <h3>Reuse resources. Reduce waste.</h3>
+
+      <p>Connect material providers with people who need them.</p>
+
+      <div class="stats">
+        <div>
+          <strong id="material-count">0</strong>
+          <small>Available listings</small>
+        </div>
+
+        <div>
+          <strong id="impact-count">0</strong>
+          <small>Reuse records</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- LOGIN AND REGISTER SECTION -->
+  <section id="auth-panel" class="panel hidden">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">YOUR ACCOUNT</p>
+        <h2>Login or create an account</h2>
+      </div>
+
+      <button class="text-button" id="close-auth">Close</button>
+    </div>
+
+    <div class="two-col">
+
+      <form id="login-form" class="form-card">
+        <h3>Login</h3>
+
+        <label>
+          Email
+          <input name="email" type="email" required>
+        </label>
+
+        <label>
+          Password
+          <input name="password" type="password" required>
+        </label>
+
+        <button class="btn">Login</button>
+      </form>
+
+
+      <form id="register-form" class="form-card">
+        <h3>Register</h3>
+
+        <label>
+          Name
+          <input name="name" required>
+        </label>
+
+        <label>
+          Email
+          <input name="email" type="email" required>
+        </label>
+
+        <label>
+          Password
+          <input name="password" type="password" minlength="8" required>
+        </label>
+
+        <label>
+          Account type
+          <select name="role">
+            <option value="user">General user</option>
+            <option value="provider">Provider</option>
+            <option value="seeker">Seeker</option>
+          </select>
+        </label>
+
+        <button class="btn">Create account</button>
+      </form>
+
+    </div>
+  </section>
+
+
+  <!-- MARKETPLACE SECTION -->
+  <section id="marketplace" class="section">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">DISCOVER</p>
+        <h2>Material marketplace</h2>
+        <p>Find reusable materials listed by the community.</p>
+      </div>
+
+      <form id="search-form" class="search">
+        <input name="search" placeholder="Search materials or location">
+        <button class="btn">Search</button>
+      </form>
+    </div>
+
+    <div id="materials" class="cards">
+      <p class="muted">Loading materials…</p>
+    </div>
+
+  </section>
+
+
+  <!-- ADD MATERIAL SECTION -->
+  <section id="add-material" class="section">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">CONTRIBUTE</p>
+        <h2>List a material</h2>
+        <p>Login first to add a listing.</p>
+      </div>
+    </div>
+
+    <form id="material-form" class="form-card grid-form">
+
+      <label>
+        Material title
+        <input name="title" required placeholder="e.g. Cement bags">
+      </label>
+
+      <label>
+        Category
+        <input name="category" required placeholder="e.g. Cement">
+      </label>
+
+      <label>
+        Quantity
+        <input name="quantity" type="number" min="0.01" step="0.01" required>
+      </label>
+
+      <label>
+        Unit
+        <input name="unit" required placeholder="bags, kg, pieces">
+      </label>
+
+      <label>
+        Condition
+        <select name="condition">
+          <option>New</option>
+          <option>Good</option>
+          <option>Used</option>
+        </select>
+      </label>
+
+      <label>
+        Location
+        <input name="location" required>
+      </label>
+
+      <label>
+        Price (₹)
+        <input name="price" type="number" min="0" step="0.01" value="0">
+      </label>
+
+      <label class="check">
+        <input name="is_free" type="checkbox">
+        Free material
+      </label>
+
+      <label class="wide">
+        Description
+        <textarea name="description" rows="3"></textarea>
+      </label>
+
+      <button class="btn wide">Publish listing</button>
+
+    </form>
+  </section>
+
+
+  <!-- REQUESTS SECTION -->
+  <section id="requests" class="section">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">ACTIVITY</p>
+        <h2>My requests</h2>
+        <p>Track requests you have sent and received.</p>
+      </div>
+
+      <button class="btn outline" id="refresh-requests">Refresh</button>
+    </div>
+
+    <div class="two-col">
+
+      <div class="panel">
+        <h3>Requests sent</h3>
+        <div id="sent-requests" class="stack muted">
+          Login to view your requests.
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Requests received</h3>
+        <div id="received-requests" class="stack muted">
+          Login to view incoming requests.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ENVIRONMENTAL IMPACT SECTION -->
+  <section id="impact" class="section">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">SUSTAINABILITY</p>
+        <h2>Environmental impact</h2>
+        <p>Track the quantity of materials reused through completed exchanges.</p>
+      </div>
+    </div>
+
+    <div class="panel impact-panel">
+
+      <div>
+        <strong id="total-reused">0</strong>
+        <span>Total quantity reused</span>
+      </div>
+
+      <div>
+        <strong id="record-count">0</strong>
+        <span>Completed reuse records</span>
+      </div>
+
+      <button class="btn outline" id="load-impact">
+        Refresh impact
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- NOTIFICATIONS SECTION -->
+  <section class="section">
+
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">UPDATES</p>
+        <h2>Notifications</h2>
+      </div>
+
+      <button class="btn outline" id="load-notifications">
+        Refresh
+      </button>
+    </div>
+
+    <div id="notifications" class="panel stack muted">
+      Login to view notifications.
+    </div>
+
+  </section>
+
+
+  <!-- REQUEST MATERIAL MODAL -->
+  <div id="request-modal" class="modal hidden">
+
+    <div class="modal-content">
+
+      <h2>Request Material</h2>
+
+      <p>Enter the quantity of material you need.</p>
+
+      <form id="request-form">
+
+        <label>
+          Requested Quantity
+          <input
+            type="number"
+            id="request-quantity"
+            min="0.01"
+            step="0.01"
+            required
+            placeholder="Enter quantity"
+          >
+        </label>
+
+        <label>
+          Message
+          <textarea
+            id="request-message"
+            rows="3"
+            placeholder="Enter your message"
+          ></textarea>
+        </label>
+
+        <div class="actions">
+
+          <button type="submit" class="btn">
+            Submit Request
+          </button>
+
+          <button type="button" id="cancel-request" class="btn outline">
+            Cancel
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+
+  <!-- SUCCESS / ERROR MESSAGE -->
+  <div id="toast" role="status" class="toast hidden"></div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+  © 2026 BuildBack · Reuse construction materials. Build a circular future.
+</footer>
+
+
+<!-- JAVASCRIPT -->
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+</html>
